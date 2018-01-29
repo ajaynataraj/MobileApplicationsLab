@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import static com.example.ajn.lab3.MainActivity.PlaceholderFragment.ARG_SECTION_NUMBER;
@@ -73,11 +74,11 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container,fragment )
                         .commit();
-                handler.postDelayed(this, 3000);
+                handler.postDelayed(this, 8000);
             }
         };
 
-        handler.postDelayed(runnable, 3000);
+        handler.postDelayed(runnable, 8000);
 
     }
 
@@ -125,7 +126,16 @@ public class MainActivity extends AppCompatActivity {
             } else if(getArguments().getInt(ARG_SECTION_NUMBER)==3){
                 rootView = inflater.inflate(R.layout.fragment_three, container, false);
                 WebView myWebView =  rootView.findViewById(R.id.webview);
-                //myWebView.loadUrl("https://www.duckduckgo.com");
+                myWebView.setWebViewClient(new WebViewClient()
+                {
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, String url)
+                    {
+                        view.loadUrl(url);
+                        return true;
+                    }
+                });
+                myWebView.loadUrl("https://www.google.com");
             } else {
                 rootView = inflater.inflate(R.layout.fragment_four, container, false);
             }
